@@ -6,11 +6,7 @@ type Profile struct {
 }
 
 type Transcode struct {
-	Input struct {
-		Bucket string `json:"Bucket"`
-		Source string `json:"Source"`
-		Type   string `json:"Type"`
-	} `json:"Input"`
+	Input Input`json:"Input"`
 	Output struct {
 		Bucket string `json:"Bucket"`
 		Dist   string `json:"Dist"`
@@ -25,6 +21,12 @@ type Transcode struct {
 	VideoCodec string `json:"VideoCodec"`
 	FrameRate  string `json:"FrameRate"`
 	TwoPass    bool   `json:"TwoPass"`
+}
+
+type Input struct {
+	Bucket string `json:"Bucket"`
+	Source string `json:"Source"`
+	Type   string `json:"Type"`
 }
 
 type Package struct {
