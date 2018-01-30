@@ -1,5 +1,7 @@
 package transcoder
 
+import "github.com/easonlin404/transcoder/aws"
+
 //type Command interface {
 //	Execute() string
 //}
@@ -19,7 +21,8 @@ func (t *Transcoder) readInput() error {
 
 	switch t.profile.Transcode.Input.Type {
 	case "S3":
-		//TODO: S3
+		//TODO: read S3 object
+		aws.ListBuckets(t.profile.Transcode.Input.Bucket, t.profile.Transcode.Input.Source)
 	case "File":
 		//TODO: File
 	default:
@@ -30,3 +33,5 @@ func (t *Transcoder) readInput() error {
 	return nil
 
 }
+
+
