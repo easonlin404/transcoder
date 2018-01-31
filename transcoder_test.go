@@ -2,18 +2,35 @@ package transcoder
 
 import (
 	"testing"
+	"github.com/stretchr/testify/assert"
 )
 
-func TestTranscoderFromS3(t *testing.T) {
-	trans := Transcoder{}
+func TestTranscoder(t *testing.T) {
+	trans := Transcoder{
+		inputReader:mockInputReader{},
+	}
 
 	profile := Profile{
 		Transcode: Transcode{Input: Input{
-			Bucket:"xxx",
+			Bucket:"bucket",
+			Source:"input.mpeg",
 			Type: "S3",
 		},
 			VideoCodec: "123", AudioCodec: "234"},
 	}
 
-	trans.Execute(profile)
+	err:=trans.Execute(profile)
+
+	assert.NoError(t,err)
+}
+
+
+
+type mockInputReader struct {
+}
+
+
+func (mockInputReader) Read(bucket, source string) ([]byte,error){
+	//TODO:
+	return nil,nil
 }

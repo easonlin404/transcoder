@@ -5,6 +5,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"log"
+	"io/ioutil"
 )
 
 func ListBuckets(bucket, source string) {
@@ -31,7 +32,7 @@ func ListBuckets(bucket, source string) {
 	}
 }
 
-func ReadBuckets(bucket, source string) {
+func ReadBuckets(bucket, key string) ([]byte,error) {
 	// Initialize a session in us-west-2 that the SDK will use to load
 	// credentials from the shared credentials file ~/.aws/credentials.
 	sess, err := session.NewSession(&aws.Config{
@@ -41,5 +42,20 @@ func ReadBuckets(bucket, source string) {
 	// Create S3 service client
 	svc := s3.New(sess)
 
-	svc.GetObject(&s3.GetObjectInput{})
+	output,err:=svc.GetObject(&s3.GetObjectInput{
+		Bucket:&bucket,
+		Key:&key,
+
+	})
+	if err !=nil{
+		return nil,err
+	}
+
+	object,err:=ioutil.ReadAll(output.Body)
+	if err !=nil{
+		return nil,err
+	}
+	output.Body.Close()
+
+	return object,err
 }
