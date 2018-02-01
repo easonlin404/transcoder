@@ -1,6 +1,5 @@
 package transcoder
 
-
 type Transcoder struct {
 	profile Profile
 	inputReader InputReader
@@ -14,7 +13,13 @@ type InputReader interface {
 func (trans *Transcoder) Execute(p Profile) error {
 	trans.profile = p
 
+	// get file
 	 _,err:=trans.readInput()
+
+
+	 // ingest profile
+
+	 // execute ffmeg
 	return err
 }
 

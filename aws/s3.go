@@ -8,6 +8,14 @@ import (
 	"io/ioutil"
 )
 
+type InputReader struct {
+}
+
+
+func (InputReader) Read(bucket, source string) ([]byte,error){
+	return readBuckets(bucket,source)
+}
+
 func ListBuckets(bucket, source string) {
 
 	// Initialize a session in us-west-2 that the SDK will use to load
@@ -32,7 +40,7 @@ func ListBuckets(bucket, source string) {
 	}
 }
 
-func ReadBuckets(bucket, key string) ([]byte,error) {
+func readBuckets(bucket, key string) ([]byte,error) {
 	// Initialize a session in us-west-2 that the SDK will use to load
 	// credentials from the shared credentials file ~/.aws/credentials.
 	sess, err := session.NewSession(&aws.Config{
